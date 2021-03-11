@@ -107,20 +107,21 @@ draw()		// just according to pos
 	glPointSize( rect ); // in pixel
 	glClear(GL_COLOR_BUFFER_BIT);	// blanking screen
     
-    glBegin(GL_POINTS);
+	glBegin(GL_POINTS);
     
-    	glColor3fv( grey );
-    	glVertex2f( (float)( head->pos_x ) * trans[0] ,  (float)( head->pos_y ) * trans[1] );
+    		glColor3fv( grey );
+    		glVertex2f( (float)( head->pos_x ) * trans[0] ,  (float)( head->pos_y ) * trans[1] );
 
 		do{
 			glColor3fv( white );
-    		glVertex2f( (float)( temp->pos_x ) * trans[0]  ,  (float)( temp->pos_y  ) * trans[1] );
-    		temp = temp->next;
+			glVertex2f( (float)( temp->pos_x ) * trans[0]  ,  (float)( temp->pos_y  ) * trans[1] );
+			temp = temp->next;
 		}while( temp );
+
 		glColor3fv( red );
 		glVertex2f( (float)( berry[0] ) * trans[0]  ,  (float)( berry[1] ) * trans[1] );
 		
-    glEnd();
+	glEnd();
 	SwapBuffers(hDC);	//swap to screen
 }
 
