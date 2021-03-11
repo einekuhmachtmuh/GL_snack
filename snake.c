@@ -106,21 +106,20 @@ draw()		// just according to pos
 	
 	glPointSize( rect ); // in pixel
 	glClear(GL_COLOR_BUFFER_BIT);	// blanking screen
-    
+	
 	glBegin(GL_POINTS);
-    
-    		glColor3fv( grey );
-    		glVertex2f( (float)( head->pos_x ) * trans[0] ,  (float)( head->pos_y ) * trans[1] );
+
+		glColor3fv( grey );
+		glVertex2f( (float)( head->pos_x ) * trans[0] ,  (float)( head->pos_y ) * trans[1] );
 
 		do{
 			glColor3fv( white );
 			glVertex2f( (float)( temp->pos_x ) * trans[0]  ,  (float)( temp->pos_y  ) * trans[1] );
 			temp = temp->next;
 		}while( temp );
-
 		glColor3fv( red );
 		glVertex2f( (float)( berry[0] ) * trans[0]  ,  (float)( berry[1] ) * trans[1] );
-		
+	
 	glEnd();
 	SwapBuffers(hDC);	//swap to screen
 }
@@ -254,20 +253,20 @@ game_update()		// collision test -> snake update -> draw
 
 LRESULT APIENTRY
 WndProc(
-    HWND hWnd,
-    UINT message,
-    WPARAM wParam,
-    LPARAM lParam)
+	HWND hWnd,
+	UINT message,
+	WPARAM wParam,
+	LPARAM lParam)
 {
-    switch (message) {
-    	case WM_CREATE:
- 		   	SetTimer(hWnd, idTimer, Period, NULL);
+	switch (message) {
+		case WM_CREATE:
+			SetTimer(hWnd, idTimer, Period, NULL);
 			return 0;
 		case WM_TIMER:
 			game_update();
-		return 0;
+			return 0;
 		case WM_DESTROY:
- 	   		KillTimer(hWnd, idTimer);
+			KillTimer(hWnd, idTimer);
 			PostQuitMessage(0);
 			return 0;
 		case WM_PAINT:
@@ -336,31 +335,31 @@ WndProc(
 					
 			}
 			return 0;
-    	default:
+		default:
 			break;
-    }
+	}
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
 int APIENTRY
 WinMain(
-    HINSTANCE hCurrentInst,
-    HINSTANCE hPreviousInst,
-    LPSTR lpszCmdLine,
-    int nCmdShow)
+	HINSTANCE hCurrentInst,
+	HINSTANCE hPreviousInst,
+	LPSTR lpszCmdLine,
+	int nCmdShow)
 {
-    wndClass.style = CS_HREDRAW | CS_VREDRAW;
-    wndClass.lpfnWndProc = WndProc;
-    wndClass.cbClsExtra = 0;
-    wndClass.cbWndExtra = 0;
-    wndClass.hInstance = hCurrentInst;
-    wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-    wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-    wndClass.hbrBackground = GetStockObject(WHITE_BRUSH);
-    wndClass.lpszMenuName = NULL;
-    wndClass.lpszClassName = className;
-    
-    if(!RegisterClass(&wndClass)){
+	wndClass.style = CS_HREDRAW | CS_VREDRAW;
+	wndClass.lpfnWndProc = WndProc;
+	wndClass.cbClsExtra = 0;
+	wndClass.cbWndExtra = 0;
+	wndClass.hInstance = hCurrentInst;
+	wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wndClass.hbrBackground = GetStockObject(WHITE_BRUSH);
+	wndClass.lpszMenuName = NULL;
+	wndClass.lpszClassName = className;
+	
+	if(!RegisterClass(&wndClass)){
 		printf("Failed to Register wndClass, Error no.0x%X\n", GetLastError());
 		return 0;
 	}
@@ -368,8 +367,8 @@ WinMain(
 	AdjustWindowRect(&WndSize, WNDstyle, 0);
 	SystemParametersInfo(SPI_GETWORKAREA, 0, &primaryDisplaySize, 0);
 
-    /* Create a window of the previously defined class */
-    hWnd = CreateWindow(
+	/* Create a window of the previously defined class */
+	hWnd = CreateWindow(
 	className,		/* Window class's name */
 	windowName,		/* Title bar text */
 	WNDstyle,
@@ -386,46 +385,46 @@ WinMain(
 		return 0;	
 	}
 
-    ShowWindow(hWnd, nCmdShow);
-    UpdateWindow(hWnd);
+	ShowWindow(hWnd, nCmdShow);
+	UpdateWindow(hWnd);
 
-    hDC = GetDC(hWnd);
-    
-    int SelectedPixelFormat =  ChoosePixelFormat(hDC, &pfd);
-    
-    if (SelectedPixelFormat == 0) {
-    	printf("Failed to choose pixel format, Error no.0x%X\n", GetLastError());
+	hDC = GetDC(hWnd);
+	
+	int SelectedPixelFormat =  ChoosePixelFormat(hDC, &pfd);
+	
+	if (SelectedPixelFormat == 0) {
+		printf("Failed to choose pixel format, Error no.0x%X\n", GetLastError());
 		return 0;
-    }
+	}
 
-    if (!SetPixelFormat(hDC, SelectedPixelFormat, &pfd)) {
-    	printf("Failed to select pixel format, Error no.0x%X\n", GetLastError());
+	if (!SetPixelFormat(hDC, SelectedPixelFormat, &pfd)) {
+		printf("Failed to select pixel format, Error no.0x%X\n", GetLastError());
 		return 0;
-    }
-    
-    if (DescribePixelFormat(hDC, SelectedPixelFormat, sizeof(PIXELFORMATDESCRIPTOR), &pfd) == 0){
-    	printf("Failed to describe pixel format, Error no.0x%X\n", GetLastError());
+	}
+	
+	if (DescribePixelFormat(hDC, SelectedPixelFormat, sizeof(PIXELFORMATDESCRIPTOR), &pfd) == 0){
+		printf("Failed to describe pixel format, Error no.0x%X\n", GetLastError());
 	} 
-    
-    
-    hGLRC = wglCreateContext(hDC);
-    wglMakeCurrent(hDC, hGLRC);
+	
+	
+	hGLRC = wglCreateContext(hDC);
+	wglMakeCurrent(hDC, hGLRC);
 	
 	glEnable( GL_PROGRAM_POINT_SIZE );
 	game_init();
 	
 	MSG msg;
 
-    while (GetMessage(&msg, NULL, 0, 0) > 0) {
+	while (GetMessage(&msg, NULL, 0, 0) > 0) {
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
-    }
+	}
 
-    if (hGLRC) {
+	if (hGLRC) {
 		wglMakeCurrent(NULL, NULL);
 		wglDeleteContext(hGLRC);
-    }
-    ReleaseDC(hWnd, hDC);
+	}
+	ReleaseDC(hWnd, hDC);
 
-    return msg.wParam;
+	return msg.wParam;
 }
