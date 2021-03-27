@@ -28,7 +28,7 @@
 
 typedef struct _node{
 	int pos_x;			// w/(2 * cell) as unit, easy to calculate.
-	int pos_y;			// Beware, pos of left botton corner.
+	int pos_y;			// Beware, pos of rec center.
 	GLubyte is_turn;	// avoid unnecessary collision test.
 	struct _node* next;
 	struct _node* pre;
@@ -99,21 +99,18 @@ inline void
 draw()		// just according to pos
 {		
 	// **Beware, draw with normalized coordinate, i.e. center of windows is ( 0, 0 ), and top right corner is ( 1, 1 ). (DIY "software" projection)
-	// 16 = W/(2*cell), 12 = H/(2*cell)
-	// head -> body -> berry
 	
 	node* temp = head->next;
 	
-	glPointSize( rect ); // in pixel
+	glPointSize( rect );	// in pixel
 	glClear(GL_COLOR_BUFFER_BIT);	// blanking screen
 	
-	glBegin(GL_POINTS);
+	glBegin(GL_POINTS);	// head -> body -> berry
 
 		glColor3fv( grey );
 		glVertex2f( (float)( head->pos_x ) * trans[0] ,  (float)( head->pos_y ) * trans[1] );
-
+		glColor3fv( white );
 		do{
-			glColor3fv( white );
 			glVertex2f( (float)( temp->pos_x ) * trans[0]  ,  (float)( temp->pos_y  ) * trans[1] );
 			temp = temp->next;
 		}while( temp );
@@ -125,7 +122,7 @@ draw()		// just according to pos
 }
 
 inline void
-spawn_berry()		// gen berry pos
+spawn_berry()	// gen berry pos
 {
 	float f1, f2;
 	int i, j;
@@ -141,12 +138,10 @@ spawn_berry()		// gen berry pos
 	
 	berry[0] = i - max_x;
 	berry[1] = j - max_y;
-	
-	//printf("berry: (%d, %d)\n", berry[0], berry[1]);
 }
 
 inline void
-game_init()		//init whole snake, turn number, lost, pause, dirction, and then spawn berry.
+game_init()	//init whole snake, turn number, lost, pause, dirction, and then spawn berry.
 {
 	snake[0].pos_x = 0;
 	snake[0].pos_y = 2;
@@ -182,7 +177,7 @@ game_init()		//init whole snake, turn number, lost, pause, dirction, and then sp
 }
 
 inline void
-game_update()		// collision test -> snake update -> draw
+game_update()	// collision test -> snake update -> draw
 {
 	
 	int t_pos[2];
@@ -217,14 +212,14 @@ game_update()		// collision test -> snake update -> draw
 	}
 	
 	
-	if( ( t_pos[0] == berry[0] ) && ( t_pos[1] == berry[1] ) ){		// eat berry
+	if( ( t_pos[0] == berry[0] ) && ( t_pos[1] == berry[1] ) ){	// eat berry
 		
-		head = snake + snake_len;	//	"alloc" new head
+		head = snake + snake_len;	//"alloc" new head
 		snake_len ++;
 		head->pos_x = t_pos[0];
 		head->pos_y = t_pos[1];
 		spawn_berry();
-		if(snake_len < 41){		// make it harder
+		if(snake_len < 41){	// level up
 			KillTimer(hWnd, idTimer);
 			Period = 4000/(36 + snake_len);
 			SetTimer(hWnd, idTimer, Period, NULL);
@@ -338,7 +333,7 @@ WndProc(
 		default:
 			break;
 	}
-	return DefWindowProc(hWnd, message, wParam, lParam);
+	return DefWindowProc( hWnd, message, wParam, lParam );
 }
 
 int APIENTRY
@@ -360,12 +355,12 @@ WinMain(
 	wndClass.lpszClassName = className;
 	
 	if(!RegisterClass(&wndClass)){
-		printf("Failed to Register wndClass, Error no.0x%X\n", GetLastError());
+		printf( "Failed to Register wndClass, Error no.0x%X\n", GetLastError() );
 		return 0;
 	}
 	
-	AdjustWindowRect(&WndSize, WNDstyle, 0);
-	SystemParametersInfo(SPI_GETWORKAREA, 0, &primaryDisplaySize, 0);
+	AdjustWindowRect( &WndSize, WNDstyle, 0 );
+	SystemParametersInfo( SPI_GETWORKAREA, 0, &primaryDisplaySize, 0 );
 
 	/* Create a window of the previously defined class */
 	hWnd = CreateWindow(
@@ -381,7 +376,7 @@ WinMain(
 	NULL);			/* No additional data */
 
 	if(!hWnd){
-		printf("Failed to create hWnd, Error no.0x%X\n", GetLastError());
+		printf( "Failed to create hWnd, Error no.0x%X\n", GetLastError() );
 		return 0;	
 	}
 
@@ -392,39 +387,41 @@ WinMain(
 	
 	int SelectedPixelFormat =  ChoosePixelFormat(hDC, &pfd);
 	
-	if (SelectedPixelFormat == 0) {
-		printf("Failed to choose pixel format, Error no.0x%X\n", GetLastError());
+	if ( SelectedPixelFormat == 0 ) {
+		printf( "Failed to choose pixel format, Error no.0x%X\n", GetLastError() );
 		return 0;
 	}
 
-	if (!SetPixelFormat(hDC, SelectedPixelFormat, &pfd)) {
-		printf("Failed to select pixel format, Error no.0x%X\n", GetLastError());
+	if ( !SetPixelFormat(hDC, SelectedPixelFormat, &pfd) ) {
+		printf( "Failed to select pixel format, Error no.0x%X\n", GetLastError() );
 		return 0;
 	}
 	
-	if (DescribePixelFormat(hDC, SelectedPixelFormat, sizeof(PIXELFORMATDESCRIPTOR), &pfd) == 0){
-		printf("Failed to describe pixel format, Error no.0x%X\n", GetLastError());
+	if ( DescribePixelFormat(hDC, SelectedPixelFormat, sizeof(PIXELFORMATDESCRIPTOR), &pfd) == 0 ){
+		printf( "Failed to describe pixel format, Error no.0x%X\n", GetLastError() );
 	} 
 	
 	
-	hGLRC = wglCreateContext(hDC);
-	wglMakeCurrent(hDC, hGLRC);
+	hGLRC = wglCreateContext( hDC );
+	wglMakeCurrent( hDC, hGLRC );
 	
 	glEnable( GL_PROGRAM_POINT_SIZE );
 	game_init();
 	
 	MSG msg;
 
-	while (GetMessage(&msg, NULL, 0, 0) > 0) {
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+	while ( GetMessage(&msg, NULL, 0, 0) > 0 ) {
+		TranslateMessage( &msg );
+		DispatchMessage( &msg );
 	}
 
-	if (hGLRC) {
-		wglMakeCurrent(NULL, NULL);
-		wglDeleteContext(hGLRC);
+	if ( hGLRC ) {
+		wglMakeCurrent( NULL, NULL );
+		wglDeleteContext( hGLRC );
 	}
-	ReleaseDC(hWnd, hDC);
+	ReleaseDC( hWnd, hDC );
+	DestroyWindow( hWnd );
+	UnregisterClass( className, hCurrentInst );
 
 	return msg.wParam;
 }
