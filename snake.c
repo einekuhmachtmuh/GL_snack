@@ -95,10 +95,9 @@ GLuint pause = 0;
 GLubyte lost = 0;
 
 inline void
-draw()		// just according to pos
+draw()
 {		
 	// **Beware, draw with normalized coordinate, i.e. center of windows is ( 0, 0 ), and top right corner is ( 1, 1 ). (DIY "software" projection)
-	// 16 = W/(2*cell), 12 = H/(2*cell)
 	// head -> body -> berry
 	
 	register node* temp = head->next;
