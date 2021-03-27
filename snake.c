@@ -144,7 +144,7 @@ inline void
 game_init()	//init whole snake(nodes, turn number, direction), lost, level(refresh period), and then spawn berry.
 {
 	snake[0].pos_x = 0;
-	snake[0].pos_y = 2;
+	snake[0].pos_y = 1;
 	snake[0].next = snake + 1;
 	snake[0].pre = NULL;
 	snake[0].is_turn = 0;
@@ -156,7 +156,7 @@ game_init()	//init whole snake(nodes, turn number, direction), lost, level(refre
 	snake[1].is_turn = 0;
 	
 	snake[2].pos_x = 0;
-	snake[2].pos_y = - 2;
+	snake[2].pos_y = - 1;
 	snake[2].next = NULL;
 	snake[2].pre = snake + 1;
 	snake[2].is_turn = 0;
