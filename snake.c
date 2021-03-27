@@ -221,7 +221,7 @@ game_update()	// collision test -> snake update -> draw
 		spawn_berry();
 		if(snake_len < 41){	// level up
 			KillTimer(hWnd, idTimer);
-			Period = 4000/(36 + snake_len);
+			Period -= 2;
 			SetTimer(hWnd, idTimer, Period, NULL);
 		}
 		
