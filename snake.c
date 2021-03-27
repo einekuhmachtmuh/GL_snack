@@ -369,9 +369,9 @@ WinMain(
 	className,		/* Window class's name */
 	windowName,		/* Title bar text */
 	WNDstyle,
-	(  primaryDisplaySize.right - primaryDisplaySize.left - WndSize.right + WndSize.left ) >> 1,
-	(  primaryDisplaySize.bottom - primaryDisplaySize.top - WndSize.bottom + WndSize.top) >> 1,		/* Position of top */
-	WndSize.right - WndSize.left, WndSize.bottom - WndSize.top,												/* Size */
+	(  primaryDisplaySize.right - primaryDisplaySize.left - WndSize.right + WndSize.left ) >> 1,	/* Position of right */
+	(  primaryDisplaySize.bottom - primaryDisplaySize.top - WndSize.bottom + WndSize.top) >> 1,	/* Position of top */
+	WndSize.right - WndSize.left, WndSize.bottom - WndSize.top,	/* Size */
 	NULL,			/* Parent window's handle */
 	NULL,			/* Menu handle */
 	hCurrentInst,		/* Instance handle */
