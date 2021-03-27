@@ -141,7 +141,7 @@ spawn_berry()	// gen berry pos
 }
 
 inline void
-game_init()	//init whole snake, turn number, lost, pause, dirction, and then spawn berry.
+game_init()	//init whole snake(nodes, turn number, direction), lost, level(refresh period), and then spawn berry.
 {
 	snake[0].pos_x = 0;
 	snake[0].pos_y = 2;
@@ -163,16 +163,14 @@ game_init()	//init whole snake, turn number, lost, pause, dirction, and then spa
 	
 	head = snake;	
 	tail = snake + 2;
-	
-	snake_len = 3;
-	
 	turn = 0;
-	pause = 0;
-	lost = 0;
-	Period = 102;
-	
+	snake_len = 3;
+
 	dir_x = 0;
 	dir_y = 2;
+	
+	lost = 0;
+	Period = 102;
 	
 	spawn_berry();
 }
