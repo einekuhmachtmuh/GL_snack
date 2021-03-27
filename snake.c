@@ -171,8 +171,8 @@ game_init()	//init whole snake, turn number, lost, pause, dirction, and then spa
 	lost = 0;
 	Period = 102;
 	
-	GLubyte dir_x = 0;
-	GLubyte dir_y = 2;
+	dir_x = 0;
+	dir_y = 2;
 	
 	spawn_berry();
 }
