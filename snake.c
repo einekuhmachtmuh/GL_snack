@@ -168,7 +168,8 @@ game_init()	//init whole snake, turn number, lost, pause, dirction, and then spa
 	
 	turn = 0;
 	pause = 0;
-	lost = 0; 
+	lost = 0;
+	Period = 102;
 	
 	GLubyte dir_x = 0;
 	GLubyte dir_y = 2;
