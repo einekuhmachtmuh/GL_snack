@@ -13,7 +13,7 @@ and link with
 
 ## Usage
 
-To pause or unpause, press **Space**.
+To pause or unpause, press '**space**'.
 
-To restart, press **r**.
+To restart, press '**r**'.
 
