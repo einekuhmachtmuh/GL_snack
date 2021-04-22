@@ -1,6 +1,8 @@
 # GL_snack
 A simple snake game only for win, with OpenGL rendering.
 
+## Compile
+
 Please compile with following options:
 
 -O3 -ffast-math
@@ -8,3 +10,10 @@ Please compile with following options:
 and link with 
 
 -lopengl32 -lgdi32
+
+## Use
+
+To pause or unpause, press **Space**.
+
+To restart, press **r**.
+
