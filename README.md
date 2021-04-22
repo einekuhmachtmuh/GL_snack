@@ -9,7 +9,7 @@ Please compile with following options:
 
 and link with 
 
--lopengl32 -lgdi32
+-lopengl32 -lgdi32 -mwindows
 
 ## Usage
 
