@@ -11,7 +11,7 @@ and link with
 
 -lopengl32 -lgdi32
 
-## Use
+## Usage
 
 To pause or unpause, press **Space**.
 
