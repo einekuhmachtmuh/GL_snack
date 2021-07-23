@@ -217,8 +217,6 @@ game_update()		// collision test -> snake update -> draw
 		
 		head = snake + snake_len;	//	"alloc" new head
 		snake_len ++;
-		head->pos_x = t_pos[0];
-		head->pos_y = t_pos[1];
 		spawn_berry();
 		if(snake_len < 41){		// make it harder
 			KillTimer(hWnd, idTimer);
@@ -235,10 +233,10 @@ game_update()		// collision test -> snake update -> draw
 		head = tail;
 		tail = tail->pre;
 		tail-> next = NULL;
-		head->pos_x = t_pos[0];
-		head->pos_y = t_pos[1];	
 	}
-	
+
+	head->pos_x = t_pos[0];
+	head->pos_y = t_pos[1];
 	t_node->pre = head;
 	head->next = t_node;
 	head->pre = NULL;
