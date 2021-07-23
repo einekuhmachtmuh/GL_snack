@@ -180,8 +180,7 @@ game_init()		//init whole snake(nodes, turn number, direction), lost, level(refr
 
 inline void
 game_update()		// collision test -> snake update -> draw
-{
-	
+{	
 	int t_pos[2];
 	node* t_node = head;
 
@@ -244,7 +243,6 @@ game_update()		// collision test -> snake update -> draw
 	t_node->pre = head;
 	
 	draw();
-	
 }
 
 LRESULT APIENTRY
