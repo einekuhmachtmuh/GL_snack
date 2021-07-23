@@ -184,7 +184,19 @@ game_update()		// collision test -> snake update -> draw
 	
 	int t_pos[2];
 	node* t_node = head;
-	
+
+	if(turn > 2){ // lost as a "poly-rectangle"
+		do{
+			t_node = t_node->next;
+			if( ( t_node->pos_x == head->pos_x  ) && ( t_node->pos_y == head->pos_y ) ){
+				lost = 1;
+				KillTimer(hWnd, idTimer);
+				return;
+			}
+		}while(t_node->next);
+		t_node = head;
+	}
+
 	t_pos[0] = head->pos_x + ((dir_x >> 1) - (dir_x & 1));
 	
 	t_pos[1] = head->pos_y + ((dir_y >> 1) - (dir_y & 1));
@@ -200,21 +212,7 @@ game_update()		// collision test -> snake update -> draw
 		KillTimer(hWnd, idTimer);
 		return;
 	}
-	
-	
-	if(turn > 2){ // lost as a "poly-rectangle"
-		do{
-			t_node = t_node->next;
-			if( ( t_node->pos_x == head->pos_x  ) && ( t_node->pos_y == head->pos_y ) ){
-				lost = 1;
-				KillTimer(hWnd, idTimer);
-				return;
-			}
-		}while(t_node->next);
-		t_node = head;
-	}
-	
-	
+
 	if( ( t_pos[0] == berry[0] ) && ( t_pos[1] == berry[1] ) ){		// eat berry
 		
 		head = snake + snake_len;	//	"alloc" new head
