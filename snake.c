@@ -237,9 +237,11 @@ game_update()		// collision test -> snake update -> draw
 
 	head->pos_x = t_pos[0];
 	head->pos_y = t_pos[1];
-	t_node->pre = head;
-	head->next = t_node;
+
 	head->pre = NULL;
+	head->next = t_node;
+
+	t_node->pre = head;
 	
 	draw();
 	
@@ -301,14 +303,14 @@ WndProc(
 					dir_x = 2;
 					dir_y = 0;
 					turn ++;
-					head->is_turn =1;
+					head->is_turn = 1;
 				} 
 					
 				if (wParam == VK_LEFT){
 					dir_x = 1;
 					dir_y = 0;
 					turn ++;
-					head->is_turn =1;
+					head->is_turn = 1;
 				} 
 					
 			} 
@@ -317,14 +319,14 @@ WndProc(
 					dir_x = 0;
 					dir_y = 2;
 					turn ++;
-					head->is_turn =1;
+					head->is_turn = 1;
 				}
 					
 				if (wParam == VK_DOWN){
 					dir_x = 0;
 					dir_y = 1;
 					turn ++;
-					head->is_turn =1;
+					head->is_turn = 1;
 				} 
 					
 			}
