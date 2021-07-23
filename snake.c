@@ -86,7 +86,7 @@ node* head = NULL;
 node* tail = NULL;
 GLint snake_len = 3;
 
-int berry[2] = { 31, 23 };
+int berry[2] = { 0, 0 };
 
 GLubyte dir_x = 0;	// 00 nothing, 01 negitive direction, 10 positive direction
 GLubyte dir_y = 2;
