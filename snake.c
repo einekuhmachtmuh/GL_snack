@@ -207,6 +207,7 @@ game_update()		// collision test -> snake update -> draw
 			t_node = t_node->next;
 			if( ( t_node->pos_x == head->pos_x  ) && ( t_node->pos_y == head->pos_y ) ){
 				lost = 1;
+				KillTimer(hWnd, idTimer);
 				return;
 			}
 		}while(t_node->next);
